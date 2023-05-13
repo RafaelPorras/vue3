@@ -15,7 +15,18 @@ const app = Vue.createApp({
     computed:{
         isFavorite(){
             return this.favorites.has(this.result.id);
+        },
+
+        allFavorites(){
+            return Array.from(this.favorites.values())
         }
+    },
+
+    created(){
+       const saveFavorites = JSON.parse(window.localStorage.getItem('favorites'));
+       if(saveFavorites?.length) {
+         this.favorites = new Map(saveFavorites.map(favorite => [favorite.id,favorite]));
+       }
     },
 
     methods:{
@@ -40,11 +51,21 @@ const app = Vue.createApp({
 
         addFavorite(){
             this.favorites.set(this.result.id,this.result);
+            this.updateStorage();
         },
 
 
         removeFavorite(){
             this.favorites.delete(this.result.id);
+            this.updateStorage();
+        },
+
+        updateStorage(){
+            window.localStorage.setItem('favorites',JSON.stringify(this.allFavorites));
+        },
+
+        showFavorite(favorite){
+            this.result = favorite;
         },
     }
 });

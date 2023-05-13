@@ -47,8 +47,15 @@ body {
 /* Result */
 .result {
   position: relative;
-  background-color: purple;
-  border-radius: 0.3rem;
+  background-color: purple;.v-enter-active,
+  .v-leave-active {
+    transition: opacity 0.5s ease;
+  }
+  
+  .v-enter-from,
+  .v-leave-to {
+    opacity: 0;
+  }
   box-shadow: 2px 2px 3px gray;
   color: white;
   padding: 2.5rem;
