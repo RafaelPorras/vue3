@@ -8,8 +8,16 @@ const app = Vue.createApp({
           search:null,
           result:null,
           error:null,
+          favorites: new Map(),
         }
     },
+
+    computed:{
+        isFavorite(){
+            return this.favorites.has(this.result.id);
+        }
+    },
+
     methods:{
         async doSearch(){
             this.result = this.error = null;
@@ -20,7 +28,7 @@ const app = Vue.createApp({
                 if(!response.ok) throw new Error("User not found");
 
                 const data = await response.json()
-                this.result=true; 
+                this.result=data; 
             } 
             catch (error) {
                 this.error = error;
@@ -28,7 +36,16 @@ const app = Vue.createApp({
             finally{
                 this.search = null;
             }
-        }
+        },
+
+        addFavorite(){
+            this.favorites.set(this.result.id,this.result);
+        },
+
+
+        removeFavorite(){
+            this.favorites.delete(this.result.id);
+        },
     }
 });
 

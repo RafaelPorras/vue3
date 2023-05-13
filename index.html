@@ -14,6 +14,7 @@
     <div id="app">
         <!-- Favorites -->
         <div class="favorites">
+            
         </div>
 
         <!-- Content -->
@@ -33,11 +34,38 @@
 
             <!-- Result -->
             <div class="result" v-if="result">
-                <h2 class="result__"></h2>
-                <img src="" alt="" class="result__avatar">
+
+                <a  v-if="isFavorite"
+                    href="#" 
+                    class="result__toggle-favorite"
+                    @click="removeFavorite">
+                    Remove Favorite 
+                </a>
+
+                <a  v-else
+                    ref="#" 
+                    class="result__toggle-favorite"
+                    @click="addFavorite">
+                    Add Favorite 
+                </a>
+
+
+                <h2 class="result__name">{{result.name}}</h2>
+
+                <img v-bind:src="result.avatar_url" 
+                     v-bind:alt="result.name" 
+                     class="result__avatar">
+
                 <p class="result__bio">
+                    {{result.bio}}
+
                     <br>
-                    <a href="" class="result__blog"></a>
+
+                    <a v-bind:href="result.blog" 
+                        target="_blank"
+                        class="result__blog">
+                        {{result.blog}}
+                    </a>
                 </p>
             </div>
             <p v-else>Waiting for search ...</p>
